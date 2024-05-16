@@ -1,0 +1,36 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+              version="4.0">
+	<!-- listener 설정 -->
+	<!-- 리스너는 웹 애플리케이션이 시작될 때 루트 컨텍스트를 로드 및 초기화하는 역활을 한다  -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- root-context.xml은 전체 웹 애플리케이션의 대한 설정 등을 담당한다. -->
+		<!-- 주로 데이터베이스 연결, 빈 설정 등을 하고 여기서 정의된 설정들은 전역적으로 공유된다. -->
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- DispatcherServlet은 front-controller 역활을 수행한다. -->
+	<!-- front-controller는 Spring에서 모든 요청을 받고 처리하는 핵심 컴포넌트(서블릿)이다.-->
+	<!-- root-context.xml에 정의된 빈들은 전역적으로 관리가 되기 때문에 servlet-context.xml에서도 참조할 수 있다.  -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- servlet-context.xml은 servlet에 대한 설정을 담당한다.  -->
+			<!-- 주로 컨트롤러, 뷰리졸버, 핸들러 맵핑, 리소스처리  등의 설정을 한다.   -->
+			<param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- 모든 요청에 대해 DispatcherServlet 맵핑 설정 -->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+</web-app>
