@@ -2,8 +2,44 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
+	<!-- root-context.xml파일에 전체적인 application에 사용되는 bean들에 대한 설정을 정의한다.  -->
+	<!-- DataSource, TranscationManager, 비지니스로직을 수행하는 POJO 클래스 등... -->
 	<context:component-scan base-package="org.spring.board"></context:component-scan>
+	
+	<!-- DataSource -->
+	<!-- HikariCP는 데이터베이스 커넥션풀링을 제공하는 라이브러리이다. -->
+	<!-- Connection Pooling : 데이터베이스 커넥션을 미리 생성해 두고 재사용하는 방식의 데이터베이스 연결 방식 -->
+	<!--  DataSource 설정 -->
+	<bean name="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/XE" />
+		<property name="username" value="BOARD" />
+		<property name="password" value="1234" />
+		<property name="maximumPoolSize" value="10" />
+		<!-- Connection Pool 최소 갯수 설정 -->
+		<property name="minimumIdle" value="5" />
+		<property name="idleTimeout" value="30000" />
+		<!-- 쿼리가 30초 이상 걸릴 시 connection을 끊는다 -->
+		<property name="connectionTimeout" value="30000" />
+		<property name="poolName" value="HikariCP-Pool" />
+	</bean>
+	
+	<bean name="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+	
+	<!-- Mybatis 설정 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- classpath는 resources 디렉토리를 가르킨다 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:mappers/*.xml" />
+	</bean>
+	
+	<mybatis-spring:scan base-package="org.spring.board.mappers" />
+	
+	
 </beans>
