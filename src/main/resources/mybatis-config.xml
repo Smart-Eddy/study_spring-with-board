@@ -3,5 +3,9 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<!-- typaAliases 설정 -->
+	<typeAliases>
+		<package name="org.spring.board.domain"/>
+	</typeAliases>
 
 </configuration>

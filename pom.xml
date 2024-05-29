@@ -1,9 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>study_spring_board</groupId>
     <artifactId>study_spring_board</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
+    <!--OJDBC를 다운받기 위한 설정-->
+    <repositories>
+        <repository>
+            <id>oracle</id>
+            <url>http://maven.jahia.org/maven2</url>
+        </repository>
+    </repositories>
     <dependencies>
         <!-- Spring 라이브러리는 버전을 동일하게 맞춰주어야 한다 -->
         <!-- Spring core -->
@@ -94,6 +101,13 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.12.4</version>
             <scope>test</scope>
+        </dependency>
+        
+        <!-- JSTL -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
         
   </dependencies>
