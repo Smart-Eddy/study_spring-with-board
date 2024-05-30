@@ -11,6 +11,10 @@
 		 ORDER BY bno DESC
 	</select>
 	
+	<select id="getCurrentSeqNo" resultType="long">
+		SELECT BOARD.tbl_board_seq.CURRVAL FROM DUAL
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO tbl_board (bno, title, content, writer) 
 		VALUES (BOARD.tbl_board_seq.NEXTVAL, #{title}, #{content}, #{writer})

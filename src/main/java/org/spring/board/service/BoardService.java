@@ -29,7 +29,9 @@ public class BoardService {
 		
 		int count = boardMapper.insert(boardVO);
 		
-		return boardVO.getBno();
+		Long bno = boardMapper.getCurrentSeqNo();
+		
+		return bno;
 	}
 	
 	// 전체 글 조회

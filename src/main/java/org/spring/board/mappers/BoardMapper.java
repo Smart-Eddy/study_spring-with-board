@@ -8,6 +8,8 @@ public interface BoardMapper {
 	
 	List<BoardVO> getList();
 	
+	long getCurrentSeqNo();
+	
 	int insert(BoardVO boardVO);
 	
 	BoardVO select(Long bno);
